@@ -22,8 +22,10 @@ module.exports = function(source) {
 			return newSource;
 		} catch(e) {
 			try {
-				console.error("ERROR Replacing Test Case File")
-				console.error("TEST CASE ID: " + query.TEST_CASE);
+				if(e.message.indexOf('ENOENT') > -1) return source;
+
+				console.error("ERROR Replacing Test Case File");
+				console.error("TEST CASE ID: " + query.testCaseID);
 				console.error("Resource Path: " + this.resourcePath);
 				console.error("Test Case Path: " + (newPath || "") );
 				console.error(e);

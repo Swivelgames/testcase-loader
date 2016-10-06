@@ -25,7 +25,7 @@ This webpack loader makes it easy to create and build test cases by having delta
     exclude: /node_modules/,
     loader: 'testcase-loader',
     query: {
-        TEST_CASE: 'TestCaseID',
+        testCaseID: 'TestCaseID',
         originalPath: '/absolute/path/to/src',
         testCasePath: '/absolute/path/to/test-cases/TestCaseID'
     }
