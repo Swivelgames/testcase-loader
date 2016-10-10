@@ -1,5 +1,7 @@
 var fs = require('fs');
 
+var errorEmitted = false;
+
 module.exports = function(source) {
 	var query = {};
 	try {
@@ -14,9 +16,7 @@ module.exports = function(source) {
 	) === 0) {
 		var newPath = '';
 		try {
-			newPath = this.resourcePath.replace(
-				new RegExp('^' + query.originalPath), query.testCasePath
-			);
+			newPath = this.resourcePath.replace(query.originalPath, query.testCasePath);
 			fs.accessSync(newPath);
 			const newSource = fs.readFileSync(newPath, 'utf-8');
 			return newSource;
@@ -30,7 +30,12 @@ module.exports = function(source) {
 				console.error("Test Case Path: " + (newPath || "") );
 				console.error(e);
 				console.error("Reverting to original file for build.");
-			} catch(e) {}
+			} catch(e) {
+				if (errorEmitted===false) {
+					errorEmitted = true;
+					console.error(e);
+				}
+			}
 		}
 	}
 
